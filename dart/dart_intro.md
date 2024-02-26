@@ -27,6 +27,9 @@
     // getManagerName() is called on the returned object
     ```
 
+* **_PascalCase_**:
+* **_camelCase_**:
+
 * **_Comments_**: 
 ```
 // This is a normal, one-line comment.
@@ -38,4 +41,71 @@
 /* Comments like these are also supported. */
 ```
 
-## Keywords
+## Generics 
+They enable you to write classes, interfaces, and functions that work with any type, without losing the type information. Generics are often used with collections (like lists, sets, and maps) to specify the type of items they contain, but they can also be used to define the type of parameters, return types, and more in custom classes and methods.
+
+#### Generics in Classes
+
+You can define a generic class by appending `<T>` (or any other placeholder name) to the class name. `T` is a type variable, a placeholder for the actual type that will be specified when the class is instantiated.
+
+```dart
+class Box<T> {
+  T value;
+
+  Box(this.value);
+}
+
+void main() {
+  var boxInt = Box<int>(123);
+  var boxString = Box<String>('Hello');
+}
+```
+
+#### Generics in Functions
+
+Similarly, you can define generic functions with type parameters:
+
+```dart
+T first<T>(List<T> list) {
+  return list[0];
+}
+
+void main() {
+  int firstInt = first<int>([1, 2, 3]);
+  String firstString = first<String>(['a', 'b', 'c']);
+}
+```
+
+#### Generics in Interfaces and Mixins
+
+Generics can also be applied to interfaces and mixins to make them more flexible:
+
+```dart
+abstract class Cache<T> {
+  T getByKey(String key);
+  void setByKey(String key, T value);
+}
+```
+
+### Bounded Types
+
+You can restrict the types that can be used with your generics by specifying bounds:
+
+```dart
+class NumberBox<T extends num> {
+  T value;
+
+  NumberBox(this.value);
+}
+
+void main() {
+  var boxInt = NumberBox<int>(123);
+  var boxDouble = NumberBox<double>(3.14);
+  // var boxString = NumberBox<String>('Hello'); // This will cause a compile-time error
+}
+```
+
+In the example above, `T extends num` means that `T` can be any type that is a subtype of `num` (like `int` or `double`), ensuring `NumberBox` can only be instantiated with numeric types.
+
+
+
